@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 import scipy.stats as sps
 import itertools as it
 
@@ -288,3 +289,69 @@ axes[0].legend(loc = (0.85, 0.5))
 fig.tight_layout()
 plt.show()
 # plt.savefig("output/maths_review/chisqt_pdf_cdf.pdf")
+
+# Bivariate normal N(0, I):
+
+x = np.linspace(-5, 5, 1000)
+X, Y = np.meshgrid(x, x)
+pos = np.dstack((X, Y))
+F = sps.multivariate_normal(np.zeros(2),np.eye(2))
+
+fig = plt.figure(figsize = (15, 7))
+
+ax1 = fig.add_subplot(1, 2, 1, projection = "3d")
+ax1.plot_surface(X, Y, F.pdf(pos), cmap='viridis',linewidth=0)
+ax1.set_title(r"$f(x)$" + "\n")
+
+ax2 = fig.add_subplot(1, 2, 2, projection = "3d")
+ax2.plot_surface(X, Y, F.cdf(pos), cmap='viridis',linewidth=0)
+ax2.set_title(r"$F(x)$" + "\n")
+
+
+for ax in [ax1, ax2]:
+    ax.xaxis.pane.set_edgecolor('black')
+    ax.yaxis.pane.set_edgecolor('black')
+    ax.zaxis.pane.set_edgecolor('black')
+    ax.xaxis.pane.fill = False
+    ax.yaxis.pane.fill = False
+    ax.zaxis.pane.fill = False
+    ax.view_init(45, -30)
+    ax.set_xlabel(r"$x_1$")
+    ax.set_ylabel(r"$x_2$")
+
+fig.tight_layout()
+plt.show()
+# plt.savefig("output/maths_review/bivariate_standard_normal.pdf")
+
+# Bivariate normal N(0, \Sigma):
+
+x = np.linspace(-5, 5, 1000)
+X, Y = np.meshgrid(x, x)
+pos = np.dstack((X, Y))
+F = sps.multivariate_normal(np.zeros(2),np.array([[1.0, 0.7], [0.7, 1.0]]))
+
+fig = plt.figure(figsize = (15, 7))
+
+ax1 = fig.add_subplot(1, 2, 1, projection = "3d")
+ax1.plot_surface(X, Y, F.pdf(pos), cmap='viridis',linewidth=0)
+ax1.set_title(r"$f(x)$" + "\n")
+
+ax2 = fig.add_subplot(1, 2, 2, projection = "3d")
+ax2.plot_surface(X, Y, F.cdf(pos), cmap='viridis',linewidth=0)
+ax2.set_title(r"$F(x)$" + "\n")
+
+
+for ax in [ax1, ax2]:
+    ax.xaxis.pane.set_edgecolor('black')
+    ax.yaxis.pane.set_edgecolor('black')
+    ax.zaxis.pane.set_edgecolor('black')
+    ax.xaxis.pane.fill = False
+    ax.yaxis.pane.fill = False
+    ax.zaxis.pane.fill = False
+    ax.view_init(45, -30)
+    ax.set_xlabel(r"$x_1$")
+    ax.set_ylabel(r"$x_2$")
+
+fig.tight_layout()
+plt.show()
+# plt.savefig("output/maths_review/bivariate_normal.pdf")
